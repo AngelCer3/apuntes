@@ -211,3 +211,195 @@ Nos permite hacer bucles de y ejecuta el bloque de código que tiene adentro ade
 ```
 
 ### Foreach
+Es una estructura de bucle para lograr recorrer arreglos de manera un poco mas sintetizada.
+```
+<?php
+
+     $calificaciones = [100,90,80,78,67,78];
+
+  
+
+     $arreglo = ["hola", 23, true];
+
+  
+
+     $persona = [
+
+        "nombre" => "Angel",
+
+        "edad" => 23,
+
+        "direccion" => [
+
+            "cuidad" => "CDMX",
+
+            "Alcaldia" => "Tlahuac",
+
+            "Pueblo" => "San Juan Ixtayopan"
+
+        ],
+
+         "calificaciones" => [12,23,45,65,78,99]
+
+        ];
+
+   /*  foreach( $calificaciones as $calificacion ){
+        print($calificacion);
+        echo "<br>";
+    }
+    echo "<br>";
+
+    foreach($arreglo as $lista):
+
+        print($lista);
+
+        echo "<br>";
+
+    endforeach; */
+    echo "<br>";
+    foreach ($persona as $llave => $valor){
+	      if(is_array($valor)){ 
+            foreach($valor as $llave2 => $valor2){
+                print_r ("Llave: ". $llave2. " valor ". $valor2);
+                echo "<br>";
+            }
+        }else{
+            print_r ("Llave: ". $llave. " valor ". $valor);
+            echo "<br>";
+        }
+    }
+?>
+```
+
+### Funciones
+Se declaran con la palabra reservada **function** y se a completa con el nombre de tu función y esta puede llevar **parámetros** de invocación o no. Y estas deben resolver únicamente una tarea.
+```
+<?php
+    function saludar($nombre, $apellido){
+        return "Hola " . $nombre . " " . $apellido;
+    }
+    print(saludar("Angel", "Cerezo"));
+
+?>
+```
+### Clases
+En una clase se pueden tener **atributos**, **funciones o métodos** y estas llevan un método constructor y lo que se hará referencia.
+Aquí un ejemplo de como crear una instancia de clase.
+```
+<?php
+    class Persona{
+        public function __construct(public $nombre, public $apellido, public $edad){
+        }
+
+    }
+    class Alumno{
+        public $matricula;
+        public $nombre;
+        public $apellido;
+        public $edad;
+
+        public function __construct($matricula, $nombre, $apellido, $edad){
+            $this -> matricula = $matricula;
+            $this -> nombre = $nombre;
+            $this -> apellido = $apellido;
+            $this -> edad = $edad;
+        }
+    }
+    $angel = new Persona("Angel", "Cerezo", 23);
+    $alumno = new Alumno(201190059, "Angel", "Cerezo", 23);
+    echo "<pre>";
+
+    print_r($angel);
+
+    echo "</pre>";
+
+    echo "<br>";
+
+    echo "<pre>";
+
+    print_r($alumno);
+
+    echo "</pre>";
+
+?>
+```
+### Encapsulación
+**Consiste en agrupar una líneas de código fuertemente relacionadas, darles un nombre y encapsularlas en un método o una clase**.
+```
+<?php
+
+    class Producto{
+
+        public function __construct(protected $nombre , protected $precio, protected $caducidad){}
+
+        static public function obtenerProducto($nombre){
+
+            if($nombre === $this-> nombre){
+
+                return "Producto :" . $this->nombre . " Precio: " . $this->precio . " Caducidad: " . $this->caducidad;
+
+            }else{
+
+                return "El producto no existe";
+
+            }
+
+        }
+
+    }
+
+    $galletas = new Producto("Principe", 20, "29/09/2023");
+
+    echo "<pre>";
+
+    print_r($galletas -> obtenerProducto("Marias"));
+
+    echo "<br>";
+  
+    print_r($galletas -> obtenerProducto("Principe"));
+
+    echo "<br>";
+  
+    print_r(Producto::obtenerProducto()); //Los ":" significan accediendo a un metodo estatico
+    
+    echo "</pre>";
+
+?>
+```
+### Funciones Estáticas
+En el contexto de clases y objetos **la palabra reservada static permite definir métodos y propiedades estáticos** (lo que no tiene que ver con el concepto de variables estáticas).
+```
+<?php
+    class Persona{
+        public static $edad;
+
+        protected static $nombre;
+
+        protected static $apellido;
+
+        public function __construct($nombre, $apellido , $edad) {
+
+            self::$nombre = $nombre;
+
+            self::$apellido = $apellido;
+
+            self::$edad = $edad;
+
+        }
+  
+        public static function obtenerPersona(){
+
+            return "Nombre: " . self::$nombre . " Apellido " . self::$apellido. " Edad: " . self::$edad;
+
+        }
+
+    }
+
+    $persona = new Persona("Angel", "Cerezo", 23);
+
+    print_r($persona ->obtenerPersona()); //Con instancia de clase
+
+    print($persona::obtenerPersona()); //Sin instancia de clase y se accede a un metodo estatico
+
+?>
+```
